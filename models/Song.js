@@ -1,7 +1,33 @@
 import mongoose from 'mongoose';
 
-const UserSchema = new mongoose.Schema({
-  // Schema definition here
+const SongSchema = new mongoose.Schema({
+  songId: {
+    type: Number,
+    required: true,
+    unique: true
+  },
+  artistId: {
+    type: Number,
+    required: true
+  },
+  artist: {
+    type: String,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  img: {
+    type: String,
+    required: true
+  },
+  url: {
+    type: String,
+    required: true
+  }
 });
 
-export default mongoose.model('User', UserSchema);
+const Song = mongoose.model('Song', SongSchema);
+
+export default Song;
