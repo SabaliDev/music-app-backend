@@ -16,7 +16,22 @@ const authController = {
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = new User({ username, email, password: hashedPassword });
       await user.save();
-      res.json({ message: "Registration successful" });
+
+      // Create a token for the newly registered user
+      const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+        expiresIn: "1 hour",
+      });
+
+      // Return user details and token
+      res.json({
+        message: "Registration successful",
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email
+        },
+        token
+      });
     } catch (error) {
       next(error);
     }
@@ -27,7 +42,7 @@ const authController = {
     const { email, password } = req.body;
 
     try {
-      const user = await User.findOne({ email});
+      const user = await User.findOne({ email });
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
@@ -40,7 +55,16 @@ const authController = {
       const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
         expiresIn: "1 hour",
       });
-      res.json({ token });
+
+      // Return user details along with the token
+      res.json({
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email
+        },
+        token
+      });
     } catch (error) {
       next(error);
     }
