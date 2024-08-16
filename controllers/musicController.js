@@ -82,9 +82,10 @@ const musicController = {
   },
 
   // Search songs and artists
+
   search: async (req, res) => {
     try {
-      const searchTerm = req.query.query.toLowerCase();
+      const searchTerm = req.query.query.trim().toLowerCase();
       const searchType = req.query.search_type;
 
       if (searchType !== "SONGS_ARTISTS") {
@@ -98,9 +99,13 @@ const musicController = {
         ],
       });
 
+      if (searchResults.length === 0) {
+        return res.status(404).json({ message: "Song not found" });
+      }
+
       res.status(200).json(searchResults);
     } catch (error) {
-      console.error(error);
+      console.error("Error occurred during search:", error);
       res.status(500).json({ error: "Error searching songs" });
     }
   },

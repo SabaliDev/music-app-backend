@@ -6,6 +6,6 @@ const musicRouter = express.Router();
 musicRouter.route("/songs").get(musicController.listSongs);
 musicRouter.route("/songs/:songtitle").get(musicController.songDetails);
 musicRouter.route("/stream/:songtitle").post(musicController.stream);
-musicRouter.route("/v1/search/multi").post(musicController.stream);
+musicRouter.route("/search/multi").get(musicController.search);
 
 export default musicRouter;

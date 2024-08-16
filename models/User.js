@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -22,8 +22,11 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  favorites: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Song'
+  }]
 });
-
 
 userSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password);
