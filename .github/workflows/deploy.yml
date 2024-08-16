@@ -1,12 +1,12 @@
-name: Deploy to Cloud Run
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - main  # or your branch of choice
+      - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
