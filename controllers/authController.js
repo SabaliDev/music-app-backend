@@ -53,7 +53,7 @@ const authController = {
       }
 
       const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-        expiresIn: "1 hour",
+        expiresIn: "24h",
       });
 
       // Return user details along with the token

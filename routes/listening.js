@@ -5,7 +5,7 @@ import {
   joinRoom,
   getRoomDetails,
   getAllUsers,
-  leaveRoom
+  leaveRoom,
 } from "../controllers/listeningRoomController.js";
 import authenticate from "../middlewares/auth.js";
 
@@ -18,6 +18,6 @@ lRrouter.post("/invite", inviteUser);
 lRrouter.post("/join/:roomId", joinRoom);
 lRrouter.get("/:roomId", getRoomDetails);
 lRrouter.get("/all", getAllUsers);
-lRrouter.post('/leave/:roomId', leaveRoom);
+lRrouter.post("/leave/:roomId", leaveRoom);
 
 export default lRrouter;
