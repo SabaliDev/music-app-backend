@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 import musicRouter from "./routes/music.js";
 import userRouter from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
+import favoriteRouter from "./routes/favorites.js";
 import lRrouter from "./routes/listening.js";
 import { Server } from "socket.io";
 
@@ -84,7 +85,8 @@ app.use(cors());
 // Define authentication routes
 app.use("/auth", authRoutes);
 
-// Register routes
+//music routes
+app.use("/api/favorite", favoriteRouter);
 app.use("/api/music", musicRouter);
 app.use("/users", userRouter);
 
