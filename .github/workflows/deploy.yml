@@ -33,5 +33,5 @@ jobs:
         gcloud run deploy music-app-backend \
           --image gcr.io/${{ secrets.GCP_PROJECT }}/music-app-backend \
           --platform managed \
-          --region us-central1 \
+          --region africa-south1 \
           --allow-unauthenticated
