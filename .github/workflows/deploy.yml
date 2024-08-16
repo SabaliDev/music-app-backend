@@ -1,0 +1,38 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Docker image
+        run: docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/music-app-backend .
+
+      - name: Push Docker image
+        run: |
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | docker login -u _json_key --password-stdin https://gcr.io
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/music-app-backend
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy music-app-backend \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/music-app-backend \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated \
+            --project ${{ secrets.GCP_PROJECT_ID }}
