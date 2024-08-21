@@ -7,7 +7,7 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  SERVICE_NAME: my-node-backend
+  SERVICE_NAME: music-app-backend
   REGION: us-central1
 
 jobs:
